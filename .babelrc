@@ -1,0 +1,10 @@
+/* Configuring Babel */
+ {
+ 	"presets": [
+ 		"es2015", "react"
+ 	]
+ }
+
+/**
+ * Now when the bable-loader is called in the webpack config file, it knows what to do.
+ */
