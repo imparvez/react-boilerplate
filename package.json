@@ -7,7 +7,7 @@
   "author": "Parvez Shaikh <parvezshaikhj@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline && babel-node server.js"
+    "start": "webpack-dev-server --hot --inline"
   },
   "dependencies": {
     "express": "^4.15.3",

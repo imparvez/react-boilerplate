@@ -16,21 +16,27 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve('dist'),
+    path: path.resolve('dist', 'app/assets/images'),
+    publicPath: '/images/',
     filename: 'index_bundle.js'
   },
   module: {
     rules: [
-      { test: /\.jsx?$/, exclude: path.resolve(__dirname, "node_modules"), use: ["babel-loader" ] },
-      { test: /\.css?$/, use: ["style-loader", "css-loader"] },
-      { test: /\.(png|jpg|gif)$/, use: ["url-loader"] },
-      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, use: ["url-loader"] }
+      { test: /\.jsx?$/, exclude: path.resolve(__dirname, 'node_modules'), use: ['babel-loader' ] },
+      { test: /\.css?$/, use: ['style-loader', 'css-loader'] },
+      { test: /\.(png|jpg|gif)$/, use: ['url-loader'] },
+      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, use: ['url-loader'] }
     ]
   },
-  plugins: [HtmlWebpackPluginConfig, HotModuleReplacementPlugin],
+  plugins: [
+    HtmlWebpackPluginConfig, 
+    HotModuleReplacementPlugin
+  ],
   devServer: {
+    contentBase: './app',
     hot: true,
-    overlay: true
+    overlay: true,
+    port: 8081
   }
 }
 
