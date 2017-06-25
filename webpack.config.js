@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './app/index.html',
   filename: 'index.html',
@@ -26,7 +27,7 @@ module.exports = {
       { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, use: ["url-loader"] }
     ]
   },
-  plugins: [HtmlWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()],
+  plugins: [HtmlWebpackPluginConfig, HotModuleReplacementPlugin],
   devServer: {
     hot: true,
     overlay: true
