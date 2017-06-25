@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './app/index.html',
@@ -7,7 +8,12 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 })
 
 module.exports = {
-  entry: './app/index.js',
+  entry: {
+    'app': [
+      'react-hot-loader/patch',
+      './app/index.js'
+    ]
+  },
   output: {
     path: path.resolve('dist'),
     filename: 'index_bundle.js'
@@ -20,8 +26,9 @@ module.exports = {
       { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, use: ["url-loader"] }
     ]
   },
-  plugins: [HtmlWebpackPluginConfig],
+  plugins: [HtmlWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()],
   devServer: {
+    hot: true,
     overlay: true
   }
 }
