@@ -16,8 +16,8 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve('dist', 'app/assets/images'),
-    publicPath: '/images/',
+    path: path.resolve('dist'),
+    publicPath: '/assets/',
     filename: 'index_bundle.js'
   },
   module: {
@@ -35,8 +35,7 @@ module.exports = {
   devServer: {
     contentBase: './app',
     hot: true,
-    overlay: true,
-    port: 8081
+    overlay: true
   }
 }
 
