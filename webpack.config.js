@@ -1,24 +1,44 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin'); // Require html-webpack-plugin
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({ // create new instance
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './app/index.html',
   filename: 'index.html', // refers to the name of HTML that a plugin will generate
   inject: 'body' // tells the plugin to add any JS into bottom of the page before closing body tag
 })
+
 module.exports = {
-	entry: './app/index.js',
-	output: {
-		path: path.resolve('dist'),
-		filename: 'index_bundle.js'
-	},
-	module: {
-		loaders: [
-			{ test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      		{ test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
-		]
-	},
-	plugins: [HtmlWebpackPluginConfig]
+  entry: {
+    'app': [
+      'react-hot-loader/patch',
+      './app/index.js'
+    ]
+  },
+  output: {
+    path: path.resolve('dist'),
+    publicPath: '/assets/',
+    filename: 'index_bundle.js'
+  },
+  module: {
+    rules: [
+      { test: /\.jsx?$/, exclude: path.resolve(__dirname, 'node_modules'), use: ['babel-loader' ] },
+      { test: /\.css?$/, use: ['style-loader', 'css-loader'] },
+      { test: /\.(png|jpg|gif)$/, use: ['url-loader'] },
+      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, use: ['url-loader'] }
+    ]
+  },
+  plugins: [
+    HtmlWebpackPluginConfig, 
+    HotModuleReplacementPlugin
+  ],
+  devServer: {
+    contentBase: './app',
+    hot: true,
+    overlay: true
+  }
 }
+
 
 /**
  * entry: Specifies the entry file where the bundler starts the bundling process.
@@ -31,3 +51,9 @@ module.exports = {
  * A better way to do this is to use this nifty package called html-webpack-plugin.
  * In layman's term, this plugin take care of your script insertions with just a few configurations. 
  */
+
+/*
+the order for loading CSS has its purpose. style-loader which was written first will be executed last 
+and the css-loader which was written last will be executed first.
+So every loader in the arrays works in that manner. Last one will be executed first, then the second-last, and then so on.
+*/

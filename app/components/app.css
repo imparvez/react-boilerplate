@@ -1,0 +1,11 @@
+@import '../assets/fonts/roboto.css';
+
+* { font-family: 'Roboto'; }
+
+body {
+    background: cornsilk;
+    background-image: url('/images/circle.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+}
