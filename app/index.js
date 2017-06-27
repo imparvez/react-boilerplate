@@ -18,4 +18,3 @@ render(App)
 if(module.hot) {
 	module.hot.accept('./components/App.jsx', () => { render(App)})
 }
-

@@ -7,3 +7,7 @@
     ],
     "plugins": ["react-hot-loader/babel"]
 }
+
+/**
+ * Now when the bable-loader is called in the webpack config file, it knows what to do.
+ */
