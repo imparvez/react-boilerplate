@@ -4,7 +4,7 @@
 
 body {
     background: cornsilk;
-    background-image: url('/images/circle.png');
+    background-image: url('../assets/images/circle.png');
     background-repeat: no-repeat;
     background-position: center;
     display: flex;

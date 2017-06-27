@@ -16,8 +16,8 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve('dist', 'app/assets/images'),
-    publicPath: '/images/',
+    path: path.resolve('dist'),
+    publicPath: '/',
     filename: 'index_bundle.js'
   },
   module: {
@@ -36,7 +36,8 @@ module.exports = {
     contentBase: './app',
     hot: true,
     overlay: true,
-    port: 8081
+    port: 8081,
+    historyApiFallback: true
   }
 }
 
@@ -45,3 +46,8 @@ the order for loading CSS has its purpose. style-loader which was written first 
 and the css-loader which was written last will be executed first.
 So every loader in the arrays works in that manner. Last one will be executed first, then the second-last, and then so on.
 */
+
+/*
+The main idea about path and publicPath is that path in Output will contain only your output bundle files/folder and
+publicPath will be the place or I can say reference generated to be be a link in your CDN 
+ */
