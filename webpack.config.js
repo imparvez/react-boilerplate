@@ -1,24 +1,19 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: './app/index.html',
-  filename: 'index.html', // refers to the name of HTML that a plugin will generate
-  inject: 'body' // tells the plugin to add any JS into bottom of the page before closing body tag
-})
+// const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+//   template: './app/index.html',
+//   filename: 'index.html', // refers to the name of HTML that a plugin will generate
+//   inject: 'body' // tells the plugin to add any JS into bottom of the page before closing body tag
+// })
+const nodeExternals = require('webpack-node-externals');
 
-module.exports = {
-  entry: {
-    'app': [
-      'react-hot-loader/patch',
-      './app/index.js'
-    ]
-  },
+const client = {
+  entry: './app/index.js',
   output: {
-    path: path.resolve('dist'),
-    publicPath: '/',
-    filename: 'index_bundle.js'
+    path: path.resolve(__dirname, 'dist/public'),
+    filename: 'client_bundle.js'
   },
   module: {
     rules: [
@@ -29,17 +24,69 @@ module.exports = {
     ]
   },
   plugins: [
-    HtmlWebpackPluginConfig, 
     HotModuleReplacementPlugin
   ],
-  devServer: {
-    contentBase: './app',
-    hot: true,
-    overlay: true,
-    port: 8081,
-    historyApiFallback: true
-  }
+};
+
+const server = {
+  entry: './server.js',
+  target: 'node',
+  devtool: 'source-map',
+  externals: [nodeExternals()],
+  output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: 'server.bundle.js'
+  },
+  module: {
+    rules: [
+      { test: /\.jsx?$/, exclude: path.resolve(__dirname, 'node_modules'), use: ['babel-loader' ] },
+      { test: /\.css?$/, use: ['css-loader/locals'] },
+      { test: /\.(png|jpg|gif)$/, use: ['url-loader'] },
+      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, use: ['url-loader'] }
+    ]
+  },
+  plugins: [
+    HotModuleReplacementPlugin,
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install();',
+      raw: true,
+      entryOnly: false
+    })
+  ],
 }
+
+module.exports = [client, server];
+
+// module.exports = {
+//   entry: {
+//     'app': [
+//       'react-hot-loader/patch',
+//       './app/index.js'
+//     ]
+//   },
+//   output: {
+//     path: path.resolve('dist'),
+//     publicPath: '/',
+//     filename: 'index_bundle.js'
+//   },
+//   module: {
+//     rules: [
+//       { test: /\.jsx?$/, exclude: path.resolve(__dirname, 'node_modules'), use: ['babel-loader' ] },
+//       { test: /\.css?$/, use: ['style-loader', 'css-loader'] },
+//       { test: /\.(png|jpg|gif)$/, use: ['url-loader'] },
+//       { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, use: ['url-loader'] }
+//     ]
+//   },
+//   plugins: [
+//     HtmlWebpackPluginConfig, 
+//     HotModuleReplacementPlugin
+//   ],
+//   devServer: {
+//     contentBase: './app',
+//     hot: true,
+//     overlay: true
+//   }
+// }
 
 
 /**
