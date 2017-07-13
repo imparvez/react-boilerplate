@@ -5,7 +5,7 @@ export default class Button extends Component {
 	render(){
 		return(
 			<div className="button-primary">
-				<button>CLICK ME</button>
+				<button>CLICK ME!!</button>
 			</div>
 		)
 	}
