@@ -29,9 +29,16 @@ const client = {
 };
 
 const server = {
+  // set this to your server entry point. This should be where you start 
+  // your express server with .listen()
   entry: './server.js',
+
+  // tell webpack this bundle will be used in nodejs environment.
   target: 'node',
   devtool: 'source-map',
+
+  // Omit node_modules code from the bundle. You don't want and don't 
+  // need them in the bundle.
   externals: [nodeExternals()],
   output: {
       path: path.resolve(__dirname, 'dist'),
